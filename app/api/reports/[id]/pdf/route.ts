@@ -5,11 +5,13 @@ import { jsPDF } from 'jspdf';
 
 export const runtime='nodejs';
 
+const fallbackUrl='https://avzjzxhvoahypwaosifd.supabase.co';
+const fallbackPublishableKey='sb_publishable_oN-w7C31Vdn4WRLgOxioIg_IzXEtT6j';
+
 export async function GET(_:Request,{params}:{params:Promise<{id:string}>}){
   const {id}=await params;
-  const url=process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key=process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-  if(!url||!key) return NextResponse.json({error:'Supabase-Konfiguration fehlt.'},{status:500});
+  const url=process.env.NEXT_PUBLIC_SUPABASE_URL||fallbackUrl;
+  const key=process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY||fallbackPublishableKey;
 
   const cookieStore=await cookies();
   const s=createServerClient(url,key,{cookies:{getAll(){return cookieStore.getAll()},setAll(){}}});
