@@ -80,10 +80,10 @@ export async function GET(_:Request,{params}:{params:Promise<{id:string}>}){
     const lines=pdf.splitTextToSize(String(value),maxWidth);
     const needed=8+(lines.length*6);
     if(y+needed>280){pdf.addPage();y=20;}
-    pdf.setFont(undefined,'bold');
+    pdf.setFont('helvetica','bold');
     pdf.text(`${label}:`,left,y);
     y+=6;
-    pdf.setFont(undefined,'normal');
+    pdf.setFont('helvetica','normal');
     for(const line of lines){pdf.text(String(line),left,y);y+=6;}
     y+=4;
   }
